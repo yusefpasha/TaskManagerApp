@@ -1,3 +1,10 @@
 <resources>
+
     <string name="app_name">Task Manager App</string>
+    <string name="unknown_error">Unknown Error</string>
+
+    <string name="create_task_success">Task Created Successfully</string>
+    <string name="update_task_success">Task Updated Successfully</string>
+    <string name="delete_task_success">Task Deleted Successfully</string>
+
 </resources>
