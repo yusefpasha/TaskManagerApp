@@ -17,6 +17,7 @@ sealed class UiText {
 
     fun asString(context: Context) =
         when (this) {
+            Init -> ""
             is DirectString -> text
             is ResourceString -> context.getString(resId)
         }

@@ -45,6 +45,7 @@ android {
 dependencies {
 
     implementation(libs.bundles.android)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)

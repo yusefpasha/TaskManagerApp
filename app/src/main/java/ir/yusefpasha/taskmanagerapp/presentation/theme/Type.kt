@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.ui.theme
+package ir.yusefpasha.taskmanagerapp.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
