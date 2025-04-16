@@ -12,8 +12,12 @@ kotlin {
 }
 
 android {
+
+    val dimensionDeployment = "deployment"
+
     namespace = "ir.yusefpasha.taskmanagerapp"
     compileSdk = 35
+    flavorDimensions += dimensionDeployment
 
     defaultConfig {
         applicationId = "ir.yusefpasha.taskmanagerapp"
@@ -36,10 +40,23 @@ android {
         compose = true
     }
 
+    productFlavors {
+        create("prefer") {
+            dimension = dimensionDeployment
+            versionNameSuffix = ".prefer"
+        }
+        create("requested") {
+            isDefault = true
+            dimension = dimensionDeployment
+            versionNameSuffix = ".requested"
+        }
+    }
+
     room {
         generateKotlin = true
         schemaDirectory("$projectDir/schemas")
     }
+
 }
 
 dependencies {
