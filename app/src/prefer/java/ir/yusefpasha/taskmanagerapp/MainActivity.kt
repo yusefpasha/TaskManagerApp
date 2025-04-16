@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.presentation
+package ir.yusefpasha.taskmanagerapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
