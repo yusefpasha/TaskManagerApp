@@ -35,7 +35,7 @@ android {
     buildFeatures {
         compose = true
     }
-    
+
     room {
         generateKotlin = true
         schemaDirectory("$projectDir/schemas")
@@ -48,5 +48,8 @@ dependencies {
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
 
 }

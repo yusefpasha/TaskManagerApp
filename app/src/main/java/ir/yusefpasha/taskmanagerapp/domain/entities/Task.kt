@@ -6,5 +6,5 @@ data class Task(
     val id: DatabaseId,
     val title: String,
     val description: String,
-    val deadline: String,
+    val deadline: Long,
 )
