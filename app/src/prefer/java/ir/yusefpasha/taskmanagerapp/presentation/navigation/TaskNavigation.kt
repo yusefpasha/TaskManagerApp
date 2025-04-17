@@ -13,8 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
-import ir.yusefpasha.taskmanagerapp.domain.utils.convertMillisecondToLocalDateTime
-import ir.yusefpasha.taskmanagerapp.presentation.component.DefaultDatePickerModal
+import ir.yusefpasha.taskmanagerapp.presentation.component.DefaultDateTimePicker
 import ir.yusefpasha.taskmanagerapp.presentation.model.AddTaskEvent
 import ir.yusefpasha.taskmanagerapp.presentation.model.EditTaskEvent
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeEvent
@@ -115,17 +114,13 @@ fun TaskNavigation(
             }
 
             if (showDatePicker) {
-                DefaultDatePickerModal(
-                    onDateSelected = { millis ->
+                DefaultDateTimePicker(
+                    onDismiss = { showDatePicker = false },
+                    onDateTimeSelected = { dateTime ->
                         viewModel.handleEvent(
-                            AddTaskEvent.UpdateDeadline(
-                                convertMillisecondToLocalDateTime(
-                                    millis = millis ?: 0
-                                )
-                            )
+                            AddTaskEvent.UpdateDeadline(deadline = dateTime)
                         )
-                    },
-                    onDismiss = { showDatePicker = false }
+                    }
                 )
             }
 
@@ -160,17 +155,13 @@ fun TaskNavigation(
             }
 
             if (showDatePicker) {
-                DefaultDatePickerModal(
-                    onDateSelected = { millis ->
+                DefaultDateTimePicker(
+                    onDismiss = { showDatePicker = false },
+                    onDateTimeSelected = { dateTime ->
                         viewModel.handleEvent(
-                            EditTaskEvent.EditDeadline(
-                                convertMillisecondToLocalDateTime(
-                                    millis = millis ?: 0
-                                )
-                            )
+                            EditTaskEvent.EditDeadline(deadline = dateTime)
                         )
-                    },
-                    onDismiss = { showDatePicker = false }
+                    }
                 )
             }
 

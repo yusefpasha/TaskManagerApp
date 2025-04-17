@@ -1,6 +1,8 @@
 package ir.yusefpasha.taskmanagerapp.domain.utils
 
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.format
+import kotlinx.datetime.format.char
 
 val LocalDateTime.Companion.default: LocalDateTime
     get() {
@@ -8,17 +10,16 @@ val LocalDateTime.Companion.default: LocalDateTime
     }
 
 fun LocalDateTime.convertToDisplayText(): String {
-    return buildString {
-        append(this@convertToDisplayText.year)
-        append("/")
-        append(this@convertToDisplayText.monthNumber)
-        append("/")
-        append(this@convertToDisplayText.dayOfMonth)
-
-        append("  ")
-
-        append(this@convertToDisplayText.hour)
-        append(":")
-        append(this@convertToDisplayText.minute)
+    val format = LocalDateTime.Format {
+        year()
+        char('/')
+        monthNumber()
+        char('/')
+        dayOfMonth()
+        char(' ')
+        hour()
+        char(':')
+        minute()
     }
+    return this.format(format)
 }
