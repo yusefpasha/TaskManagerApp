@@ -62,6 +62,7 @@ android {
 dependencies {
 
     implementation(libs.bundles.android)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.compose.bom))
@@ -69,5 +70,8 @@ dependencies {
 
     implementation(libs.bundles.room)
     ksp(libs.room.compiler)
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.bundles.koin)
 
 }

@@ -2,9 +2,25 @@
 
     <string name="app_name">Task Manager App</string>
     <string name="unknown_error">Unknown Error</string>
+    <string name="apply">Apply</string>
+    <string name="create">Create</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
     <string name="create_task_success">Task Created Successfully</string>
     <string name="update_task_success">Task Updated Successfully</string>
     <string name="delete_task_success">Task Deleted Successfully</string>
+
+    <string name="task_deadline_value">Deadline: %1$s</string>
+    <string name="task_not_exist_message">There are no tasks, please create a new task or refresh the page…</string>
+
+    <string name="home">Home</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+
+    <string name="task_title">Task Title</string>
+    <string name="task_description">Task Description</string>
+    <string name="task_deadline">Task Deadline</string>
 
 </resources>
