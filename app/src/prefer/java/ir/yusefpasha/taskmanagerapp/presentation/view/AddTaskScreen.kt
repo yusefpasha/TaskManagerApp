@@ -195,7 +195,7 @@ fun AddTaskScreen(
                                 onEvent(AddTaskEvent.UpdateDescription(description = value))
                             },
                             label = {
-                                Text(text = stringResource(R.string.task_title))
+                                Text(text = stringResource(R.string.task_description))
                             },
                             leadingIcon = {
                                 Icon(

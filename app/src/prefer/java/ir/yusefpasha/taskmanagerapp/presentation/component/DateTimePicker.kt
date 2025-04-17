@@ -11,6 +11,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
@@ -26,15 +27,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
-import ir.yusefpasha.taskmanagerapp.domain.utils.convertLocalDateTimeToMillisecond
 import ir.yusefpasha.taskmanagerapp.domain.utils.convertMillisecondToLocalDateTime
 import ir.yusefpasha.taskmanagerapp.presentation.theme.padding
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
-import kotlinx.datetime.atTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDateTime
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun DefaultDateTimePicker(
     initial: LocalDateTime? = null,
@@ -86,9 +90,18 @@ internal fun DefaultDatePicker(
     onDateSelected: (LocalDate) -> Unit
 ) {
 
+    val currentInstant = Clock.System.now()
+    val initialInstant = initial?.atStartOfDayIn(TimeZone.UTC)
+
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = initial?.atTime(hour = 0, minute = 0, second = 0)?.let {
-            convertLocalDateTimeToMillisecond(it)
+        initialSelectedDateMillis = initialInstant?.toEpochMilliseconds(),
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                val today = currentInstant.toLocalDateTime(TimeZone.UTC).date
+                val selectedDate = convertMillisecondToLocalDateTime(utcTimeMillis).date
+                return selectedDate >= today
+
+            }
         }
     )
 

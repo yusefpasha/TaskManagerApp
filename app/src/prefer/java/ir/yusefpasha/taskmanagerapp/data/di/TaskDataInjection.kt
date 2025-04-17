@@ -1,10 +1,15 @@
 package ir.yusefpasha.taskmanagerapp.data.di
 
+import android.app.AlarmManager
 import ir.yusefpasha.taskmanagerapp.data.local.TaskDao
 import ir.yusefpasha.taskmanagerapp.data.local.TaskDatabase
 import ir.yusefpasha.taskmanagerapp.data.remote.TaskApiService
 import ir.yusefpasha.taskmanagerapp.data.repository.TaskRepositoryImpl
+import ir.yusefpasha.taskmanagerapp.data.service.AlarmServiceImpl
+import ir.yusefpasha.taskmanagerapp.data.service.NotificationServiceImpl
 import ir.yusefpasha.taskmanagerapp.domain.repository.TaskRepository
+import ir.yusefpasha.taskmanagerapp.domain.service.AlarmService
+import ir.yusefpasha.taskmanagerapp.domain.service.NotificationService
 import ir.yusefpasha.taskmanagerapp.domain.utils.Constants
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseBuilder
 import org.koin.android.ext.koin.androidContext
@@ -21,6 +26,12 @@ val TaskDataInjection = module {
         )
     }
     single<TaskDao> { get<TaskDatabase>().taskDao() }
+    single<AlarmManager> {
+        val context = androidContext()
+        context.getSystemService(AlarmManager::class.java)
+    }
     singleOf(::TaskApiService)
+    singleOf(::AlarmServiceImpl) { bind<AlarmService>() }
     singleOf(::TaskRepositoryImpl) { bind<TaskRepository>() }
+    singleOf(::NotificationServiceImpl) { bind<NotificationService>() }
 }

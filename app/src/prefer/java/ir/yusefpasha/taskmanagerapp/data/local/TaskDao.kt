@@ -24,7 +24,7 @@ interface TaskDao {
     suspend fun insert(task: TaskEntity): Long
 
     @Query("SELECT * FROM $TABLE_NAME WHERE id = :taskId")
-    suspend fun read(taskId: DatabaseId): TaskEntity
+    suspend fun read(taskId: DatabaseId): TaskEntity?
 
     @Update
     suspend fun update(task: TaskEntity): Int

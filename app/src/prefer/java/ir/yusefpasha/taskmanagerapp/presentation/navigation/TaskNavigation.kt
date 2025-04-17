@@ -156,6 +156,7 @@ fun TaskNavigation(
 
             if (showDatePicker) {
                 DefaultDateTimePicker(
+                    initial = state.deadline,
                     onDismiss = { showDatePicker = false },
                     onDateTimeSelected = { dateTime ->
                         viewModel.handleEvent(

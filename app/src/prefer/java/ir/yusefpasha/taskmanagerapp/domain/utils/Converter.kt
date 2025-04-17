@@ -6,10 +6,18 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
-fun convertMillisecondToLocalDateTime(millis: Long): LocalDateTime {
-    return Instant.fromEpochMilliseconds(millis).toLocalDateTime(TimeZone.currentSystemDefault())
+fun convertMillisecondToLocalDateTime(
+    millis: Long,
+    timeZone: TimeZone = TimeZone.currentSystemDefault()
+): LocalDateTime {
+    return Instant.fromEpochMilliseconds(millis).toLocalDateTime(timeZone)
 }
 
-fun convertLocalDateTimeToMillisecond(localDateTime: LocalDateTime): Long {
-    return localDateTime.toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
+fun convertLocalDateTimeToMillisecond(
+    localDateTime: LocalDateTime,
+    timeZone: TimeZone = TimeZone.currentSystemDefault()
+): Long {
+    return localDateTime.toInstant(timeZone).toEpochMilliseconds()
 }
+
+fun Long.toDatabaseId(): DatabaseId = this.toInt()
