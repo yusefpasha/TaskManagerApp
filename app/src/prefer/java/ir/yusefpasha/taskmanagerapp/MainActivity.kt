@@ -5,10 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import ir.yusefpasha.taskmanagerapp.presentation.navigation.TaskNavigation
 import ir.yusefpasha.taskmanagerapp.presentation.theme.TaskManagerAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,11 +18,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navHostController = rememberNavController()
             TaskManagerAppTheme {
-                Scaffold(modifier = Modifier.Companion.fillMaxSize()) { innerPadding ->
-                    Text(
-                        text = "Android",
-                        modifier = Modifier.Companion.padding(innerPadding)
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    TaskNavigation(
+                        modifier = Modifier.fillMaxSize(),
+                        navHostController = navHostController,
+                        onExitApplication = { finish() }
                     )
                 }
             }
