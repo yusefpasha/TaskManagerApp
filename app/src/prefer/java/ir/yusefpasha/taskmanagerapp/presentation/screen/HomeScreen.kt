@@ -1,8 +1,11 @@
 package ir.yusefpasha.taskmanagerapp.presentation.screen
 
-import androidx.compose.animation.AnimatedContent
+import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,9 +13,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.WbTwilight
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.SyncDisabled
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -28,13 +31,15 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import ir.yusefpasha.taskmanagerapp.R
-import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.domain.model.SyncTaskState
+import ir.yusefpasha.taskmanagerapp.presentation.component.SettingMenu
 import ir.yusefpasha.taskmanagerapp.presentation.component.TaskItemView
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeEvent
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeState
@@ -53,6 +58,7 @@ fun HomeScreen(
     onEvent: (event: HomeEvent) -> Unit
 ) {
 
+    val context = LocalContext.current
     val pullToRefreshState: PullToRefreshState = rememberPullToRefreshState()
 
     Scaffold(
@@ -67,31 +73,79 @@ fun HomeScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            onEvent(HomeEvent.ChangeTheme)
+                            onEvent(HomeEvent.ExpandedMenu(expanded = true))
                         }
                     ) {
                         Icon(
-                            imageVector = when (state.theme) {
-                                TaskThemeMode.Auto -> Icons.Default.WbTwilight
-                                TaskThemeMode.DarkMode -> Icons.Default.DarkMode
-                                TaskThemeMode.LightMode -> Icons.Default.LightMode
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "setting_menu"
+                        )
+                    }
+                    SettingMenu(
+                        theme = state.theme,
+                        expandedMenu = state.expandedMenu,
+                        syncTask = state.syncTaskIsEnabled(),
+                        onThemeClickListener = { themeMode ->
+                            onEvent(HomeEvent.ChangeTheme(themeMode = themeMode))
+                        },
+                        onSyncTaskClickListener = { enabled ->
+                            onEvent(HomeEvent.SyncTask(enable = enabled))
+                        },
+                        onExpandMenuClickListener = { expanded ->
+                            onEvent(HomeEvent.ExpandedMenu(expanded = expanded))
+                        }
+                    )
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            val message = when (state.syncTask) {
+                                SyncTaskState.Enqueued,
+                                SyncTaskState.Success -> context.getString(R.string.sync_task_enable)
+
+                                SyncTaskState.Running -> context.getString(R.string.sync_task_in_progress)
+
+                                SyncTaskState.Unknown,
+                                SyncTaskState.Failure -> context.getString(R.string.sync_task_disable)
+                            }
+                            Toast.makeText(
+                                context,
+                                message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = when (state.syncTask) {
+                                SyncTaskState.Enqueued,
+                                SyncTaskState.Running,
+                                SyncTaskState.Success -> Icons.Default.Sync
+
+                                SyncTaskState.Unknown,
+                                SyncTaskState.Failure -> Icons.Default.SyncDisabled
                             },
-                            contentDescription = "theme_switch"
+                            contentDescription = "sync_task"
                         )
                     }
                 }
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    onEvent(HomeEvent.NavigateToAddTask)
-                },
+            AnimatedVisibility(
+                exit = fadeOut(),
+                enter = fadeIn(),
+                visible = state.tasksListState.isScrollInProgress.not()
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "navigate_to_add_task"
-                )
+                FloatingActionButton(
+                    onClick = {
+                        onEvent(HomeEvent.NavigateToAddTask)
+                    },
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "navigate_to_add_task"
+                    )
+                }
             }
         },
         floatingActionButtonPosition = FabPosition.Start,
@@ -107,55 +161,45 @@ fun HomeScreen(
                 onEvent(HomeEvent.RefreshTask)
             }
         ) {
-            AnimatedContent(
-                targetState = state.tasks,
-                modifier = Modifier.fillMaxWidth(),
-            ) { targetState ->
-                when {
-
-                    targetState.isEmpty() -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        horizontal = MaterialTheme.padding.medium,
-                                    ),
-                                text = stringResource(R.string.task_not_exist_message),
-                                style = MaterialTheme.typography.bodyLarge,
-                                textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = state.tasksListState,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = MaterialTheme.padding.medium,
+                    alignment = Alignment.Top
+                ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(MaterialTheme.padding.small)
+            ) {
+                item {
+                    AnimatedVisibility(
+                        modifier = Modifier.fillMaxSize(),
+                        visible = state.tasks.isEmpty()
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    vertical = MaterialTheme.padding.extraLarge,
+                                    horizontal = MaterialTheme.padding.medium
+                                ),
+                            text = stringResource(R.string.task_not_exist_message),
+                            style = MaterialTheme.typography.bodyLarge,
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
-
-                    else -> {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            state = state.tasksListState,
-                            verticalArrangement = Arrangement.spacedBy(
-                                space = MaterialTheme.padding.small,
-                                alignment = Alignment.Top
-                            ),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            items(
-                                items = state.tasks,
-                                key = { item -> item.id }
-                            ) { task ->
-                                TaskItemView(
-                                    task = task,
-                                    onClick = {
-                                        onEvent(HomeEvent.NavigateToTask(taskId = task.id))
-                                    },
-                                )
-                            }
-                        }
-                    }
-
+                }
+                items(
+                    items = state.tasks,
+                    key = { item -> item.id }
+                ) { task ->
+                    TaskItemView(
+                        task = task,
+                        onClick = {
+                            onEvent(HomeEvent.NavigateToTask(taskId = task.id))
+                        },
+                    )
                 }
             }
         }

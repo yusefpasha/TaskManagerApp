@@ -1,5 +1,6 @@
 package ir.yusefpasha.taskmanagerapp.domain.repository
 
+import ir.yusefpasha.taskmanagerapp.domain.model.SyncTaskState
 import ir.yusefpasha.taskmanagerapp.domain.model.Task
 import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
@@ -14,9 +15,13 @@ interface TaskRepository {
     suspend fun updateTask(task: Task): Boolean
     suspend fun deleteTask(id: DatabaseId): Boolean
 
-    suspend fun syncTask()
+    suspend fun syncTask(): Boolean
 
     fun observeTaskTheme(): Flow<TaskThemeMode>
     suspend fun persistTaskTheme(theme: TaskThemeMode): Boolean
+
+    fun stopSyncTaskScheduler()
+    fun startSyncTaskScheduler()
+    fun observeSyncTaskScheduler(): Flow<SyncTaskState>
 
 }

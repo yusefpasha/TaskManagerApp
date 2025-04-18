@@ -3,11 +3,13 @@ package ir.yusefpasha.taskmanagerapp.presentation.view_model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ChangeThemeUseCase
+import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveSyncTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveThemeUseCase
-import ir.yusefpasha.taskmanagerapp.domain.use_case.RefreshTaskUseCase
+import ir.yusefpasha.taskmanagerapp.domain.use_case.StartSyncTaskUseCase
+import ir.yusefpasha.taskmanagerapp.domain.use_case.StopSyncTaskUseCase
+import ir.yusefpasha.taskmanagerapp.domain.use_case.SyncTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.utils.Constants
 import ir.yusefpasha.taskmanagerapp.presentation.mapper.toTaskItem
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeEvent
@@ -29,8 +31,11 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     observeTasksUseCase: ObserveTaskUseCase,
     observeThemeUseCase: ObserveThemeUseCase,
-    private val refreshTaskUseCase: RefreshTaskUseCase,
-    private val changeThemeUseCase: ChangeThemeUseCase
+    observeSyncTaskUseCase: ObserveSyncTaskUseCase,
+    private val syncTaskUseCase: SyncTaskUseCase,
+    private val changeThemeUseCase: ChangeThemeUseCase,
+    private val stopSyncTaskUseCase: StopSyncTaskUseCase,
+    private val startSyncTaskUseCase: StartSyncTaskUseCase,
 ) : ViewModel() {
 
     private val coroutineContext = Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
@@ -50,17 +55,20 @@ class HomeViewModel(
     init {
         combine(
             observeTasksUseCase(),
-            observeThemeUseCase()
-        ) { tasks, themeMode ->
+            observeThemeUseCase(),
+            observeSyncTaskUseCase()
+        ) { tasks, themeMode, syncTask ->
             HomeState(
                 isLoading = false,
                 tasks = tasks
                     .map { task -> task.toTaskItem() }
                     .sortedBy { it.deadline },
-                theme = themeMode
+                theme = themeMode,
+                syncTask = syncTask
             )
         }.onEach { state ->
             _state.emit(state)
+            Log.d("OBSERVE", state.syncTask.toString())
         }.flowOn(context = coroutineContext).launchIn(scope = viewModelScope)
     }
 
@@ -69,20 +77,24 @@ class HomeViewModel(
             when (event) {
                 HomeEvent.Exit -> _event.send(event)
                 HomeEvent.NavigateToAddTask -> _event.send(event)
-                HomeEvent.ChangeTheme -> {
-                    val theme = when (state.value.theme) {
-                        TaskThemeMode.Auto -> TaskThemeMode.DarkMode
-                        TaskThemeMode.DarkMode -> TaskThemeMode.LightMode
-                        TaskThemeMode.LightMode -> TaskThemeMode.Auto
+                is HomeEvent.ChangeTheme -> {
+                    changeThemeUseCase(themeMode = event.themeMode)
+                }
+
+                is HomeEvent.ExpandedMenu -> _state.update { it.copy(expandedMenu = event.expanded) }
+                is HomeEvent.SyncTask -> {
+                    if (event.enable) {
+                        startSyncTaskUseCase()
+                    } else {
+                        stopSyncTaskUseCase()
                     }
-                    changeThemeUseCase(themeMode = theme)
                 }
 
                 is HomeEvent.NavigateToTask -> _event.send(event)
                 is HomeEvent.NavigateToEditTask -> _event.send(event)
                 HomeEvent.RefreshTask -> {
                     _state.update { it.copy(isLoading = true) }
-                    refreshTaskUseCase()
+                    syncTaskUseCase()
                     _state.update { it.copy(isLoading = false) }
                 }
             }

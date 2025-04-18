@@ -1,6 +1,7 @@
 package ir.yusefpasha.taskmanagerapp.presentation.model
 
 import androidx.compose.runtime.Immutable
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
 
 @Immutable
@@ -10,7 +11,17 @@ sealed interface HomeEvent {
 
     object RefreshTask : HomeEvent
 
-    object ChangeTheme : HomeEvent
+    data class ChangeTheme(
+        val themeMode: TaskThemeMode
+    ) : HomeEvent
+
+    data class ExpandedMenu(
+        val expanded: Boolean
+    ) : HomeEvent
+
+    data class SyncTask(
+        val enable: Boolean
+    ) : HomeEvent
 
     data class NavigateToTask(
         val taskId: DatabaseId

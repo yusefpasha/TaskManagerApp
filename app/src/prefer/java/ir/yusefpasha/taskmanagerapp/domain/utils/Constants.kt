@@ -17,7 +17,7 @@ object Constants {
     const val ALARM_SERVICE_SUBTITLE_KEY = "subtitle"
 
     const val NOTIFICATION_CHANNEL_ID = "Task Manager App"
-    const val NOTIFICATION_CHANNEL_NAME = "Task Deadline Notification"
+    const val NOTIFICATION_CHANNEL_NAME = "Task Notification"
     const val NOTIFICATION_CHANNEL_DESCRIPTION =
         "Displaying notifications related to tasks, displays information about each task at the specified time"
 
