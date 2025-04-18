@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.androidx.room)
+    alias(libs.plugins.androidx.hilt)
 }
 
 kotlin {
@@ -77,5 +78,10 @@ dependencies {
     implementation(libs.bundles.datastore.preferences)
 
     implementation(libs.work.runtime.ktx)
+
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.bundles.retrofit2)
 
 }
