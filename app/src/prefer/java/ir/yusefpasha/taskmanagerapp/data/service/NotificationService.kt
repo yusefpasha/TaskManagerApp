@@ -11,13 +11,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.NotificationCompat
 import ir.yusefpasha.taskmanagerapp.R
-import ir.yusefpasha.taskmanagerapp.domain.service.NotificationService
-import ir.yusefpasha.taskmanagerapp.domain.utils.Constants
 import ir.yusefpasha.taskmanagerapp.data.utils.NotificationBuilder
 import ir.yusefpasha.taskmanagerapp.data.utils.PermissionFactory
+import ir.yusefpasha.taskmanagerapp.domain.utils.Constants
 import kotlin.random.Random
 
-class NotificationServiceImpl(private val context: Context) : NotificationService {
+class NotificationService(private val context: Context) {
 
     private val notificationManager = NotificationBuilder.NotificationManager(context)
         .setChannelId(Constants.NOTIFICATION_CHANNEL_ID)
@@ -37,7 +36,7 @@ class NotificationServiceImpl(private val context: Context) : NotificationServic
     )
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    override fun showSimple(
+    fun showSimple(
         id: Int,
         title: String,
         subtitle: String

@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.domain.entities
+package ir.yusefpasha.taskmanagerapp.domain.model
 
 import android.content.Context
 import androidx.annotation.StringRes

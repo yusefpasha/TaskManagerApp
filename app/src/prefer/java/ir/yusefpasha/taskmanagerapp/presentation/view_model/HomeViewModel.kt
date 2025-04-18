@@ -3,7 +3,7 @@ package ir.yusefpasha.taskmanagerapp.presentation.view_model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ChangeThemeUseCase
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveThemeUseCase

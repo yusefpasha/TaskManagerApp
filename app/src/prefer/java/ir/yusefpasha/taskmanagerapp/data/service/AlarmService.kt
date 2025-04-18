@@ -7,16 +7,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import ir.yusefpasha.taskmanagerapp.data.receiver.AlarmReceiver
-import ir.yusefpasha.taskmanagerapp.domain.service.AlarmService
 import ir.yusefpasha.taskmanagerapp.domain.utils.Constants
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
 
-class AlarmServiceImpl(
+class AlarmService(
     private val context: Context,
     private val alarmManager: AlarmManager
-) : AlarmService {
+) {
 
-    override fun cancel(id: DatabaseId) {
+    fun cancel(id: DatabaseId) {
         val intent = Intent(context, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -29,7 +28,7 @@ class AlarmServiceImpl(
     }
 
     @SuppressLint("ScheduleExactAlarm")
-    override fun schedule(
+    fun schedule(
         id: DatabaseId,
         title: String,
         subtitle: String,

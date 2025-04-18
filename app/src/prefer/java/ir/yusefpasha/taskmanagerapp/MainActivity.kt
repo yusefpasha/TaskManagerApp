@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveThemeUseCase
 import ir.yusefpasha.taskmanagerapp.presentation.navigation.TaskNavigation
 import ir.yusefpasha.taskmanagerapp.presentation.theme.TaskManagerAppTheme

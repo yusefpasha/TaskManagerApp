@@ -1,7 +1,7 @@
 package ir.yusefpasha.taskmanagerapp.domain.repository
 
-import ir.yusefpasha.taskmanagerapp.domain.entities.Task
-import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.domain.model.Task
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
 import kotlinx.coroutines.flow.Flow
 

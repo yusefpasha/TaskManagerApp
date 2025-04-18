@@ -17,9 +17,9 @@ import ir.yusefpasha.taskmanagerapp.presentation.component.DefaultDateTimePicker
 import ir.yusefpasha.taskmanagerapp.presentation.model.AddTaskEvent
 import ir.yusefpasha.taskmanagerapp.presentation.model.EditTaskEvent
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeEvent
-import ir.yusefpasha.taskmanagerapp.presentation.view.AddTaskScreen
-import ir.yusefpasha.taskmanagerapp.presentation.view.EditTaskScreen
-import ir.yusefpasha.taskmanagerapp.presentation.view.HomeScreen
+import ir.yusefpasha.taskmanagerapp.presentation.screen.AddTaskScreen
+import ir.yusefpasha.taskmanagerapp.presentation.screen.EditTaskScreen
+import ir.yusefpasha.taskmanagerapp.presentation.screen.HomeScreen
 import ir.yusefpasha.taskmanagerapp.presentation.view_model.AddTaskViewModel
 import ir.yusefpasha.taskmanagerapp.presentation.view_model.EditTaskViewModel
 import ir.yusefpasha.taskmanagerapp.presentation.view_model.HomeViewModel

@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.domain.entities
+package ir.yusefpasha.taskmanagerapp.domain.model
 
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
 

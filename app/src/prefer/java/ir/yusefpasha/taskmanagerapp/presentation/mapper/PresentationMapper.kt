@@ -1,6 +1,6 @@
 package ir.yusefpasha.taskmanagerapp.presentation.mapper
 
-import ir.yusefpasha.taskmanagerapp.domain.entities.Task
+import ir.yusefpasha.taskmanagerapp.domain.model.Task
 import ir.yusefpasha.taskmanagerapp.domain.utils.convertMillisecondToLocalDateTime
 import ir.yusefpasha.taskmanagerapp.presentation.model.TaskItem
 

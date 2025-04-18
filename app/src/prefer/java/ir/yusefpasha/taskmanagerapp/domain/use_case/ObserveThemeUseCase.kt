@@ -1,6 +1,6 @@
 package ir.yusefpasha.taskmanagerapp.domain.use_case
 
-import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 

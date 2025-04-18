@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.presentation.view
+package ir.yusefpasha.taskmanagerapp.presentation.screen
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -18,7 +18,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -44,12 +43,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import ir.yusefpasha.taskmanagerapp.R
-import ir.yusefpasha.taskmanagerapp.domain.utils.DEFAULT_DATABASE_ID
 import ir.yusefpasha.taskmanagerapp.domain.utils.convertToDisplayText
 import ir.yusefpasha.taskmanagerapp.domain.utils.default
-import ir.yusefpasha.taskmanagerapp.presentation.model.EditTaskEvent
-import ir.yusefpasha.taskmanagerapp.presentation.model.EditTaskState
-import ir.yusefpasha.taskmanagerapp.presentation.model.TaskItem
+import ir.yusefpasha.taskmanagerapp.presentation.model.AddTaskEvent
+import ir.yusefpasha.taskmanagerapp.presentation.model.AddTaskState
 import ir.yusefpasha.taskmanagerapp.presentation.theme.padding
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
@@ -58,10 +55,10 @@ import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun EditTaskScreen(
+fun AddTaskScreen(
     modifier: Modifier = Modifier,
-    state: EditTaskState,
-    onEvent: (event: EditTaskEvent) -> Unit
+    state: AddTaskState,
+    onEvent: (event: AddTaskEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -70,23 +67,14 @@ fun EditTaskScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.edit_task))
-                },
-                actions = {
-                    IconButton(
-                        enabled = state.isValidForDelete(),
-                        onClick = { onEvent(EditTaskEvent.Delete) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "delete"
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.add_task)
+                    )
                 },
                 navigationIcon = {
                     IconButton(
-                        enabled = state.isValidForNavigateUp(),
-                        onClick = { onEvent(EditTaskEvent.NavigateUp) }
+                        enabled = state.isLoading.not(),
+                        onClick = { onEvent(AddTaskEvent.NavigateUp) }
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBackIosNew,
@@ -105,16 +93,15 @@ fun EditTaskScreen(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = state.isValidForUpdate(),
+                    enabled = state.isValidForApply(),
                     shape = MaterialTheme.shapes.medium,
                     onClick = {
-                        onEvent(EditTaskEvent.Update)
+                        onEvent(AddTaskEvent.Apply)
                     }
                 ) {
-                    Text(text = stringResource(R.string.update))
+                    Text(text = stringResource(R.string.create))
                 }
 
                 OutlinedButton(
@@ -122,12 +109,11 @@ fun EditTaskScreen(
                     enabled = state.isValidForCancel(),
                     shape = MaterialTheme.shapes.medium,
                     onClick = {
-                        onEvent(EditTaskEvent.NavigateUp)
+                        onEvent(AddTaskEvent.NavigateUp)
                     }
                 ) {
                     Text(text = stringResource(R.string.cancel))
                 }
-
             }
         }
     ) { innerPadding ->
@@ -139,7 +125,6 @@ fun EditTaskScreen(
                 .padding(horizontal = MaterialTheme.padding.medium),
         ) { targetState ->
             when (targetState) {
-
                 true -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -158,8 +143,7 @@ fun EditTaskScreen(
                     ) = FocusRequester.createRefs()
 
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(
                             space = MaterialTheme.padding.small,
                             alignment = Alignment.Top
@@ -174,7 +158,7 @@ fun EditTaskScreen(
                             shape = MaterialTheme.shapes.medium,
                             value = state.title,
                             onValueChange = { value ->
-                                onEvent(EditTaskEvent.EditTitle(title = value))
+                                onEvent(AddTaskEvent.UpdateTitle(title = value))
                             },
                             label = {
                                 Text(text = stringResource(R.string.task_title))
@@ -205,7 +189,7 @@ fun EditTaskScreen(
                             shape = MaterialTheme.shapes.medium,
                             value = state.description,
                             onValueChange = { value ->
-                                onEvent(EditTaskEvent.EditDescription(description = value))
+                                onEvent(AddTaskEvent.UpdateDescription(description = value))
                             },
                             label = {
                                 Text(text = stringResource(R.string.task_description))
@@ -241,7 +225,7 @@ fun EditTaskScreen(
                                         awaitFirstDown(pass = PointerEventPass.Initial)
                                         val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
                                         if (upEvent != null) {
-                                            onEvent(EditTaskEvent.ShowDateTimePicker)
+                                            onEvent(AddTaskEvent.ShowDateTimePicker)
                                         }
                                     }
                                 },
@@ -270,6 +254,7 @@ fun EditTaskScreen(
                                     titleFM.freeFocus()
                                     descriptionFM.freeFocus()
                                     deadlineFM.freeFocus()
+                                    onEvent(AddTaskEvent.Apply)
                                 }
                             )
                         )
@@ -284,15 +269,12 @@ fun EditTaskScreen(
 
 @Preview
 @Composable
-private fun EditTaskScreenIdlePreview() {
-    EditTaskScreen(
-        state = EditTaskState(
-            task = TaskItem(
-                id = DEFAULT_DATABASE_ID,
-                title = LoremIpsum(2).values.joinToString(),
-                description = LoremIpsum(10).values.joinToString(),
-                deadline = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-            ),
+private fun AddTaskScreenIdlePreview() {
+    AddTaskScreen(
+        state = AddTaskState(
+            title = LoremIpsum(2).values.joinToString(),
+            description = LoremIpsum(10).values.joinToString(),
+            deadline = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
             isLoading = false
         ),
         onEvent = {}
@@ -301,17 +283,9 @@ private fun EditTaskScreenIdlePreview() {
 
 @Preview
 @Composable
-private fun EditTaskScreenLoadingPreview() {
-    EditTaskScreen(
-        state = EditTaskState(
-            task = TaskItem(
-                id = DEFAULT_DATABASE_ID,
-                title = LoremIpsum(2).values.joinToString(),
-                description = LoremIpsum(10).values.joinToString(),
-                deadline = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-            ),
-            isLoading = true
-        ),
+private fun AddTaskScreenLoadingPreview() {
+    AddTaskScreen(
+        state = AddTaskState(isLoading = true),
         onEvent = {}
     )
 }

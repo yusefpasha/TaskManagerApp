@@ -1,8 +1,8 @@
 package ir.yusefpasha.taskmanagerapp.domain.use_case
 
 import ir.yusefpasha.taskmanagerapp.R
-import ir.yusefpasha.taskmanagerapp.domain.entities.UiMessage
-import ir.yusefpasha.taskmanagerapp.domain.entities.UiText
+import ir.yusefpasha.taskmanagerapp.domain.model.UiMessage
+import ir.yusefpasha.taskmanagerapp.domain.model.UiText
 import ir.yusefpasha.taskmanagerapp.domain.repository.TaskRepository
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
 

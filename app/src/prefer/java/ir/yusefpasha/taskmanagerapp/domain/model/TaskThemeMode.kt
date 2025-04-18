@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.domain.entities
+package ir.yusefpasha.taskmanagerapp.domain.model
 
 enum class TaskThemeMode {
     Auto,

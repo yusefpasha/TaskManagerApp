@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.presentation.view
+package ir.yusefpasha.taskmanagerapp.presentation.screen
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import ir.yusefpasha.taskmanagerapp.R
-import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.presentation.component.TaskItemView
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeEvent
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeState

@@ -2,7 +2,7 @@ package ir.yusefpasha.taskmanagerapp.presentation.model
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
-import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 
 @Stable
 data class HomeState(

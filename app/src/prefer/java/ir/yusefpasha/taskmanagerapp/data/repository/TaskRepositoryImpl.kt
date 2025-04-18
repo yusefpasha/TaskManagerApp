@@ -5,10 +5,10 @@ import ir.yusefpasha.taskmanagerapp.data.local.TaskDataStore
 import ir.yusefpasha.taskmanagerapp.data.mapper.toTask
 import ir.yusefpasha.taskmanagerapp.data.mapper.toTaskEntity
 import ir.yusefpasha.taskmanagerapp.data.remote.TaskApiService
-import ir.yusefpasha.taskmanagerapp.domain.entities.Task
-import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
+import ir.yusefpasha.taskmanagerapp.data.service.AlarmService
+import ir.yusefpasha.taskmanagerapp.domain.model.Task
+import ir.yusefpasha.taskmanagerapp.domain.model.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.repository.TaskRepository
-import ir.yusefpasha.taskmanagerapp.domain.service.AlarmService
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
 import ir.yusefpasha.taskmanagerapp.domain.utils.toDatabaseId
 import kotlinx.coroutines.flow.Flow
