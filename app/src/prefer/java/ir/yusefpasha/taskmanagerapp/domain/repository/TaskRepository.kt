@@ -1,6 +1,7 @@
 package ir.yusefpasha.taskmanagerapp.domain.repository
 
 import ir.yusefpasha.taskmanagerapp.domain.entities.Task
+import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
 import kotlinx.coroutines.flow.Flow
 
@@ -14,5 +15,8 @@ interface TaskRepository {
     suspend fun deleteTask(id: DatabaseId): Boolean
 
     suspend fun syncTask()
+
+    fun observeTaskTheme(): Flow<TaskThemeMode>
+    suspend fun persistTaskTheme(theme: TaskThemeMode): Boolean
 
 }

@@ -13,8 +13,8 @@ import androidx.core.app.NotificationCompat
 import ir.yusefpasha.taskmanagerapp.R
 import ir.yusefpasha.taskmanagerapp.domain.service.NotificationService
 import ir.yusefpasha.taskmanagerapp.domain.utils.Constants
-import ir.yusefpasha.taskmanagerapp.domain.utils.NotificationBuilder
-import ir.yusefpasha.taskmanagerapp.domain.utils.PermissionFactory
+import ir.yusefpasha.taskmanagerapp.data.utils.NotificationBuilder
+import ir.yusefpasha.taskmanagerapp.data.utils.PermissionFactory
 import kotlin.random.Random
 
 class NotificationServiceImpl(private val context: Context) : NotificationService {

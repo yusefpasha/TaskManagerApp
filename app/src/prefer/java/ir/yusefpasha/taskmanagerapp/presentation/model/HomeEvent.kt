@@ -10,6 +10,8 @@ sealed interface HomeEvent {
 
     object RefreshTask : HomeEvent
 
+    object ChangeTheme : HomeEvent
+
     data class NavigateToTask(
         val taskId: DatabaseId
     ) : HomeEvent

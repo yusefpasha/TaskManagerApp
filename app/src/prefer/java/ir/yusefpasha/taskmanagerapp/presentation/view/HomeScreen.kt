@@ -10,11 +10,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import ir.yusefpasha.taskmanagerapp.R
+import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.presentation.component.TaskItemView
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeEvent
 import ir.yusefpasha.taskmanagerapp.presentation.model.HomeState
@@ -58,6 +63,22 @@ fun HomeScreen(
                     Text(
                         text = stringResource(R.string.home)
                     )
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            onEvent(HomeEvent.ChangeTheme)
+                        }
+                    ) {
+                        Icon(
+                            imageVector = when (state.theme) {
+                                TaskThemeMode.Auto -> Icons.Default.WbTwilight
+                                TaskThemeMode.DarkMode -> Icons.Default.DarkMode
+                                TaskThemeMode.LightMode -> Icons.Default.LightMode
+                            },
+                            contentDescription = "theme_switch"
+                        )
+                    }
                 }
             )
         },

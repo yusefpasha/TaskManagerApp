@@ -1,11 +1,12 @@
 package ir.yusefpasha.taskmanagerapp.data.repository
 
-import android.util.Log
 import ir.yusefpasha.taskmanagerapp.data.local.TaskDao
+import ir.yusefpasha.taskmanagerapp.data.local.TaskDataStore
 import ir.yusefpasha.taskmanagerapp.data.mapper.toTask
 import ir.yusefpasha.taskmanagerapp.data.mapper.toTaskEntity
 import ir.yusefpasha.taskmanagerapp.data.remote.TaskApiService
 import ir.yusefpasha.taskmanagerapp.domain.entities.Task
+import ir.yusefpasha.taskmanagerapp.domain.entities.TaskThemeMode
 import ir.yusefpasha.taskmanagerapp.domain.repository.TaskRepository
 import ir.yusefpasha.taskmanagerapp.domain.service.AlarmService
 import ir.yusefpasha.taskmanagerapp.domain.utils.DatabaseId
@@ -16,7 +17,8 @@ import kotlinx.coroutines.flow.map
 class TaskRepositoryImpl(
     private val taskDao: TaskDao,
     private val alarmService: AlarmService,
-    private val taskApiService: TaskApiService
+    private val taskDataStore: TaskDataStore,
+    private val taskApiService: TaskApiService,
 ) : TaskRepository {
 
     override fun observeTasks(): Flow<List<Task>> {
@@ -83,4 +85,24 @@ class TaskRepositoryImpl(
         }
     }
 
+    override fun observeTaskTheme(): Flow<TaskThemeMode> {
+        return taskDataStore.taskThemeFlow.map { isDarkTheme ->
+            when (isDarkTheme) {
+                null -> TaskThemeMode.Auto
+                true -> TaskThemeMode.DarkMode
+                false -> TaskThemeMode.LightMode
+            }
+        }
+    }
+
+    override suspend fun persistTaskTheme(theme: TaskThemeMode): Boolean {
+        val result = taskDataStore.persistTaskTheme(
+            data = when (theme) {
+                TaskThemeMode.Auto -> null
+                TaskThemeMode.DarkMode -> true
+                TaskThemeMode.LightMode -> false
+            }
+        )
+        return result
+    }
 }

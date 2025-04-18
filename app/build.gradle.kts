@@ -74,4 +74,6 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
 
+    implementation(libs.bundles.datastore.preferences)
+
 }
