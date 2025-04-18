@@ -16,13 +16,13 @@ android {
     val dimensionDeployment = "deployment"
 
     namespace = "ir.yusefpasha.taskmanagerapp"
-    compileSdk = 35
+    compileSdk = 36
     flavorDimensions += dimensionDeployment
 
     defaultConfig {
         applicationId = "ir.yusefpasha.taskmanagerapp"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -75,5 +75,7 @@ dependencies {
     implementation(libs.bundles.koin)
 
     implementation(libs.bundles.datastore.preferences)
+
+    implementation(libs.work.runtime.ktx)
 
 }

@@ -75,6 +75,7 @@ ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serializatio
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 koin-core-coroutines = { group = "io.insert-koin", name = "koin-core-coroutines" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
+koin-androidx-workmanager = { group = "io.insert-koin", name = "koin-androidx-workmanager" }
 koin-androidx-compose-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation" }
 #endregion
 
@@ -143,6 +144,7 @@ android-test = [
 koin = [
     "koin-core-coroutines",
     "koin-androidx-compose",
+    "koin-androidx-workmanager",
     "koin-androidx-compose-navigation",
 ]
 

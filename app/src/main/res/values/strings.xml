@@ -23,4 +23,14 @@
     <string name="task_description">Task Description</string>
     <string name="task_deadline">Task Deadline</string>
 
+    <string name="theme">Theme</string>
+    <string name="theme_dark">Dark Mode</string>
+    <string name="theme_light">Light Mode</string>
+    <string name="theme_follow_system">Follow System</string>
+    <string name="sync_task_automatic">Sync Tasks Automatic</string>
+
+    <string name="sync_task_enable">Sync Task Enable</string>
+    <string name="sync_task_disable">Sync Task Disable</string>
+    <string name="sync_task_in_progress">Sync Task in Progress…</string>
+
 </resources>
