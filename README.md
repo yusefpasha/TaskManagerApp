@@ -77,8 +77,8 @@ In this architecture, the Presentation Layer depends on the Domain Layer, which 
 
 📥 **Installation Instructions**:
 
-- **Release Version**: For the **Requested Flavor (Hilt + Retrofit2)**, download the APK from the Releases section.
-- **PreRelease Version**: For the **Prefer Flavor (Koin + KtorClient)**, download the APK from the PreReleases section.
+- **Prefer Flavor APK**: For the **Prefer Flavor (Koin + KtorClient)**, download **Task Manager App-x.x.prefer** .
+- **Requested Flavor APK**: For the **Requested Flavor (Hilt + Retrofit2)**, download **Task Manager App-x.x.requested**.
 
 📲 **Installation**: Once downloaded, install the APK file on your Android device.
 
