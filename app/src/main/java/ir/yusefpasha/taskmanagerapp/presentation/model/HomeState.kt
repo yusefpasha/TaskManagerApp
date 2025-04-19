@@ -26,4 +26,8 @@ data class HomeState(
         }
     }
 
+    fun taskGestureEnabled(): Boolean {
+        return tasksListState.isScrollInProgress.not()
+    }
+
 }

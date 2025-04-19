@@ -60,9 +60,8 @@ fun TaskNavigation(
                 exitApp = onExitApplication,
                 navigateToHomeScreen = {
                     navHostController.navigate(HomeScreenNav) {
-                        popUpTo(SplashScreenNav) {
-                            inclusive = true
-                        }
+                        popUpTo(navHostController.graph.startDestinationId) { inclusive = true }
+                        launchSingleTop = true
                     }
                 }
             )
@@ -82,17 +81,13 @@ fun TaskNavigation(
             LaunchedEffect(key1 = Unit) {
                 viewModel.event.collectLatest { event ->
                     when (event) {
-                        is HomeEvent.NavigateToTask -> {
+                        is HomeEvent.EditTask -> {
                             navHostController.navigate(EditTaskScreenNav(taskId = event.taskId))
                         }
 
                         HomeEvent.Exit -> onExitApplication()
                         HomeEvent.NavigateToAddTask -> {
                             navHostController.navigate(AddTaskScreenNav)
-                        }
-
-                        is HomeEvent.NavigateToEditTask -> {
-                            navHostController.navigate(EditTaskScreenNav(taskId = event.taskId))
                         }
 
                         else -> {}

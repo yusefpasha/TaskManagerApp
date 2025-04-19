@@ -16,9 +16,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.SyncDisabled
+import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -205,11 +207,16 @@ fun HomeScreen(
                     val swipeState = rememberSwipeToDismissBoxState(
                         initialValue = SwipeToDismissBoxValue.Settled,
                         confirmValueChange = { dismissValue ->
-                            if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
-                                onEvent(HomeEvent.DeleteTask(taskId = task.id))
-                                true
-                            } else {
-                                false
+                            when(dismissValue) {
+                                SwipeToDismissBoxValue.StartToEnd -> {
+                                    onEvent(HomeEvent.EditTask(taskId = task.id))
+                                    false
+                                }
+                                SwipeToDismissBoxValue.EndToStart -> {
+                                    onEvent(HomeEvent.DeleteTask(taskId = task.id))
+                                    false
+                                }
+                                SwipeToDismissBoxValue.Settled -> false
                             }
                         }
                     )
@@ -221,14 +228,30 @@ fun HomeScreen(
                                 modifier = Modifier.animateItem(),
                                 task = task,
                                 onClick = {
-                                    onEvent(HomeEvent.NavigateToTask(taskId = task.id))
+                                    onEvent(HomeEvent.EditTask(taskId = task.id))
                                 },
                             )
                         },
                         backgroundContent = {
                             val direction = swipeState.dismissDirection
+                            val icon = when (direction) {
+                                SwipeToDismissBoxValue.StartToEnd -> Icons.Default.Edit
+                                SwipeToDismissBoxValue.EndToStart -> Icons.Default.Delete
+                                else -> Icons.Default.Task
+                            }
+                            val iconAlignment = when (direction) {
+                                SwipeToDismissBoxValue.StartToEnd -> Alignment.CenterStart
+                                SwipeToDismissBoxValue.EndToStart -> Alignment.CenterEnd
+                                else -> Alignment.Center
+                            }
                             val color = when (direction) {
+                                SwipeToDismissBoxValue.StartToEnd -> MaterialTheme.colorScheme.primaryContainer
                                 SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.error
+                                else -> Color.Transparent
+                            }
+                            val colorTint = when (direction) {
+                                SwipeToDismissBoxValue.StartToEnd -> MaterialTheme.colorScheme.onPrimaryContainer
+                                SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.onError
                                 else -> Color.Transparent
                             }
                             Box(
@@ -236,17 +259,16 @@ fun HomeScreen(
                                     .fillMaxSize()
                                     .background(color = color, shape = MaterialTheme.shapes.medium)
                                     .padding(MaterialTheme.padding.large),
-                                contentAlignment = Alignment.CenterEnd
+                                contentAlignment = iconAlignment
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "delete_task",
-                                    tint = MaterialTheme.colorScheme.onError
+                                    imageVector = icon,
+                                    contentDescription = "swipe_task",
+                                    tint = colorTint
                                 )
                             }
                         },
-                        gesturesEnabled = state.tasksListState.isScrollInProgress.not(),
-                        enableDismissFromStartToEnd = false
+                        gesturesEnabled = state.taskGestureEnabled(),
                     )
                 }
             }

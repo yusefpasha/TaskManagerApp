@@ -98,8 +98,7 @@ class HomeViewModel @Inject constructor(
                     deleteTaskUseCase(taskId = event.taskId)
                 }
 
-                is HomeEvent.NavigateToTask -> _event.send(event)
-                is HomeEvent.NavigateToEditTask -> _event.send(event)
+                is HomeEvent.EditTask -> _event.send(event)
                 HomeEvent.RefreshTask -> {
                     _state.update { it.copy(isLoading = true) }
                     syncTaskUseCase()
