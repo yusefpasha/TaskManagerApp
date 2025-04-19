@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.ksp)
@@ -35,7 +37,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -60,6 +63,14 @@ android {
     room {
         generateKotlin = true
         schemaDirectory("$projectDir/schemas")
+    }
+
+    applicationVariants.all {
+        outputs.all {
+            if (this is BaseVariantOutputImpl) {
+                outputFileName = "Task Manager App-${versionName}.apk"
+            }
+        }
     }
 
 }
