@@ -21,11 +21,15 @@ import ir.yusefpasha.taskmanagerapp.presentation.model.HomeEvent
 import ir.yusefpasha.taskmanagerapp.presentation.screen.AddTaskScreen
 import ir.yusefpasha.taskmanagerapp.presentation.screen.EditTaskScreen
 import ir.yusefpasha.taskmanagerapp.presentation.screen.HomeScreen
+import ir.yusefpasha.taskmanagerapp.presentation.screen.SplashScreen
 import ir.yusefpasha.taskmanagerapp.presentation.view_model.AddTaskViewModel
 import ir.yusefpasha.taskmanagerapp.presentation.view_model.EditTaskViewModel
 import ir.yusefpasha.taskmanagerapp.presentation.view_model.HomeViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.serialization.Serializable
+
+@Serializable
+object SplashScreenNav
 
 @Serializable
 object HomeScreenNav
@@ -48,8 +52,21 @@ fun TaskNavigation(
     NavHost(
         modifier = modifier,
         navController = navHostController,
-        startDestination = HomeScreenNav,
+        startDestination = SplashScreenNav,
     ) {
+
+        composable<SplashScreenNav> {
+            SplashScreen(
+                exitApp = onExitApplication,
+                navigateToHomeScreen = {
+                    navHostController.navigate(HomeScreenNav) {
+                        popUpTo(SplashScreenNav) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
 
         composable<HomeScreenNav> {
 
