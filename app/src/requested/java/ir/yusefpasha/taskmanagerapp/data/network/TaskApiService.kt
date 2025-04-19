@@ -14,7 +14,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 interface TaskApiService {
 
-    @GET
+    @GET("/")
     suspend fun fetchTasks(): Response<List<TaskDto>>
 
 }

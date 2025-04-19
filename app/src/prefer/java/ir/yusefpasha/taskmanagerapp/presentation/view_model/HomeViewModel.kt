@@ -70,7 +70,6 @@ class HomeViewModel(
             )
         }.onEach { state ->
             _state.emit(state)
-            Log.d("OBSERVE", state.syncTask.toString())
         }.flowOn(context = coroutineContext).launchIn(scope = viewModelScope)
     }
 

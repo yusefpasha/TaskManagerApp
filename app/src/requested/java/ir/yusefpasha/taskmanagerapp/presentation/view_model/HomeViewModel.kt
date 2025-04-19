@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel  @Inject constructor(
+class HomeViewModel @Inject constructor(
     observeTasksUseCase: ObserveTaskUseCase,
     observeThemeUseCase: ObserveThemeUseCase,
     observeSyncTaskUseCase: ObserveSyncTaskUseCase,
@@ -73,7 +73,6 @@ class HomeViewModel  @Inject constructor(
             )
         }.onEach { state ->
             _state.emit(state)
-            Log.d("OBSERVE", state.syncTask.toString())
         }.flowOn(context = coroutineContext).launchIn(scope = viewModelScope)
     }
 
