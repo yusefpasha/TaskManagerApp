@@ -4,7 +4,9 @@ import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.SyncDisabled
@@ -24,13 +27,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -194,11 +201,52 @@ fun HomeScreen(
                     items = state.tasks,
                     key = { item -> item.id }
                 ) { task ->
-                    TaskItemView(
-                        task = task,
-                        onClick = {
-                            onEvent(HomeEvent.NavigateToTask(taskId = task.id))
+
+                    val swipeState = rememberSwipeToDismissBoxState(
+                        initialValue = SwipeToDismissBoxValue.Settled,
+                        confirmValueChange = { dismissValue ->
+                            if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
+                                onEvent(HomeEvent.DeleteTask(taskId = task.id))
+                                true
+                            } else {
+                                false
+                            }
+                        }
+                    )
+
+                    SwipeToDismissBox(
+                        state = swipeState,
+                        content = {
+                            TaskItemView(
+                                modifier = Modifier.animateItem(),
+                                task = task,
+                                onClick = {
+                                    onEvent(HomeEvent.NavigateToTask(taskId = task.id))
+                                },
+                            )
                         },
+                        backgroundContent = {
+                            val direction = swipeState.dismissDirection
+                            val color = when (direction) {
+                                SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.error
+                                else -> Color.Transparent
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = color, shape = MaterialTheme.shapes.medium)
+                                    .padding(MaterialTheme.padding.large),
+                                contentAlignment = Alignment.CenterEnd
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "delete_task",
+                                    tint = MaterialTheme.colorScheme.onError
+                                )
+                            }
+                        },
+                        gesturesEnabled = state.tasksListState.isScrollInProgress.not(),
+                        enableDismissFromStartToEnd = false
                     )
                 }
             }

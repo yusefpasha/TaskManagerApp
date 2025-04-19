@@ -4,13 +4,13 @@ object Constants {
 
     const val DEFAULT_SHARING_START = 5_000L
 
-    const val TASK_TABLE_NAME = "task"
-    const val TASK_DATABASE_NAME = "task_db"
-    const val TASK_DATABASE_VERSION = 1
-    const val TASK_DATABASE_EXPORT_SCHEMA = true
+    const val DATABASE_NAME = "app_db"
+    const val DATABASE_VERSION = 1
+    const val DATABASE_EXPORT_SCHEMA = true
+    const val DATABASE_TASK_TABLE_NAME = "task"
 
-    const val TASK_DATASTORE_NAME = "task_ds"
-    const val TASK_DATASTORE_THEME_KEY = "task_theme"
+    const val DATASTORE_NAME = "app_ds"
+    const val DATASTORE_THEME_KEY = "theme"
 
     const val ALARM_SERVICE_ID_KEY = "id"
     const val ALARM_SERVICE_TITLE_KEY = "title"

@@ -1,4 +1,4 @@
-package ir.yusefpasha.taskmanagerapp.data.remote
+package ir.yusefpasha.taskmanagerapp.data.network.dto
 
 import kotlinx.serialization.Serializable
 

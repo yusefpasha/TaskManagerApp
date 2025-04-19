@@ -23,7 +23,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    private lateinit var themeMode: ObserveThemeUseCase
+    lateinit var themeMode: ObserveThemeUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,4 +48,5 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }

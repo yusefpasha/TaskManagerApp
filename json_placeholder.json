@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Morning Routine Checklist",
+    "description": "Start the day by waking up early, doing a light stretch, showering, eating a healthy breakfast, and planning the top tasks before heading out.",
+    "deadline": 1713420000000
+  },
+  {
+    "title": "Grocery Shopping List",
+    "description": "Buy fresh vegetables, fruits, bread, eggs, and milk. Don't forget snacks and cleaning supplies. Stick to the budget and avoid impulse purchases.",
+    "deadline": 1713430800000
+  },
+  {
+    "title": "Weekly Team Meeting Notes",
+    "description": "Review last week's progress, assign new tasks, discuss roadblocks, and confirm deadlines. Everyone should leave with clear action points and goals.",
+    "deadline": 1713441600000
+  },
+  {
+    "title": "Summer Vacation Plans",
+    "description": "Book flights and hotels in advance. Make a list of places to visit, restaurants to try, and souvenirs to bring back from the trip.",
+    "deadline": 1713456000000
+  },
+  {
+    "title": "Favorite Book Recommendations",
+    "description": "Include a mix of genres like thrillers, non-fiction, and science fiction. Each book should have a compelling storyline and memorable characters.",
+    "deadline": 1713463200000
+  },
+  {
+    "title": "Fitness Goals for This Month",
+    "description": "Focus on daily workouts, improve endurance, eat healthy meals, drink enough water, and track your progress with weekly summaries and photos.",
+    "deadline": 1713470400000
+  },
+  {
+    "title": "Daily Task Tracker",
+    "description": "Use this list to stay organized throughout the day by noting down important tasks, small goals, and reminders you might forget later.",
+    "deadline": 1713481200000
+  },
+  {
+    "title": "Home Renovation Ideas",
+    "description": "List ideas for redesigning the living room, kitchen, or bedroom. Include color schemes, furniture changes, and budget estimates for each section.",
+    "deadline": 1713492000000
+  },
+  {
+    "title": "Monthly Budget Overview",
+    "description": "Track monthly income, expenses, and savings. Identify areas where you can reduce spending and make plans to achieve your financial goals.",
+    "deadline": 1713502800000
+  },
+  {
+    "title": "Weekend Movie Watchlist",
+    "description": "Pick a mix of genres like action, comedy, or drama. Include both new releases and classic favorites that are fun to re-watch with friends.",
+    "deadline": 1713513600000
+  }
+]

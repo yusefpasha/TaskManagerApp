@@ -3,6 +3,7 @@ package ir.yusefpasha.taskmanagerapp.presentation.view_model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.yusefpasha.taskmanagerapp.domain.use_case.CreateTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.utils.Constants
 import ir.yusefpasha.taskmanagerapp.presentation.model.AddTaskEvent
@@ -19,10 +20,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
+import javax.inject.Inject
 
-class AddTaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : ViewModel() {
+@HiltViewModel
+class AddTaskViewModel @Inject constructor(private val createTaskUseCase: CreateTaskUseCase) : ViewModel() {
 
-    val coroutineContext = Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+    private val coroutineContext = Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
         Log.d(this.toString(), throwable.message.orEmpty())
     }
 

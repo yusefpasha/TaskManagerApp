@@ -23,6 +23,10 @@ sealed interface HomeEvent {
         val enable: Boolean
     ) : HomeEvent
 
+    data class DeleteTask(
+        val taskId: DatabaseId
+    ) : HomeEvent
+
     data class NavigateToTask(
         val taskId: DatabaseId
     ) : HomeEvent

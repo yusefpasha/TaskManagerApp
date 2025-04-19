@@ -28,6 +28,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/4ec15201-b157-49bd-8bef-a34f55cc8de4/\"")
+
     }
 
     buildTypes {
@@ -39,6 +42,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     productFlavors {
@@ -64,6 +68,7 @@ dependencies {
 
     implementation(libs.bundles.android)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.compose.bom))
@@ -79,9 +84,38 @@ dependencies {
 
     implementation(libs.work.runtime.ktx)
 
-    implementation(libs.hilt)
-    ksp(libs.hilt.compiler)
+    requestedImplementation(libs.bundles.hilt)
+    requestedKsp(libs.hilt.compiler)
+    requestedKsp(libs.hilt.androidx.compiler)
 
-    implementation(libs.bundles.retrofit2)
 
+    requestedImplementation(libs.bundles.retrofit2)
+    preferImplementation(libs.bundles.ktor.client)
+
+}
+
+fun DependencyHandlerScope.preferKsp(dependencyNotation: Any) {
+    add(
+        "kspPrefer",
+        dependencyNotation = dependencyNotation
+    )
+}
+fun DependencyHandlerScope.preferImplementation(dependencyNotation: Any) {
+    add(
+        "preferImplementation",
+        dependencyNotation = dependencyNotation
+    )
+}
+
+fun DependencyHandlerScope.requestedKsp(dependencyNotation: Any) {
+    add(
+        "kspRequested",
+        dependencyNotation = dependencyNotation
+    )
+}
+fun DependencyHandlerScope.requestedImplementation(dependencyNotation: Any) {
+    add(
+        "requestedImplementation",
+        dependencyNotation = dependencyNotation
+    )
 }

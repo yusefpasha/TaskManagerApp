@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ChangeThemeUseCase
+import ir.yusefpasha.taskmanagerapp.domain.use_case.DeleteTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveSyncTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveTaskUseCase
 import ir.yusefpasha.taskmanagerapp.domain.use_case.ObserveThemeUseCase
@@ -33,6 +34,7 @@ class HomeViewModel(
     observeThemeUseCase: ObserveThemeUseCase,
     observeSyncTaskUseCase: ObserveSyncTaskUseCase,
     private val syncTaskUseCase: SyncTaskUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase,
     private val changeThemeUseCase: ChangeThemeUseCase,
     private val stopSyncTaskUseCase: StopSyncTaskUseCase,
     private val startSyncTaskUseCase: StartSyncTaskUseCase,
@@ -88,6 +90,10 @@ class HomeViewModel(
                     } else {
                         stopSyncTaskUseCase()
                     }
+                }
+
+                is HomeEvent.DeleteTask -> {
+                    deleteTaskUseCase(taskId = event.taskId)
                 }
 
                 is HomeEvent.NavigateToTask -> _event.send(event)

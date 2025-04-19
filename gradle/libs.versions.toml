@@ -2,7 +2,8 @@
 agp = "8.9.1"
 koin = "4.0.0"
 room = "2.7.0"
-hilt = "2.51.1"
+hilt = "2.56.2"
+hiltAndroicX = "1.2.0"
 kotlin = "2.1.20"
 kotlinKsp = "2.1.20-1.0.32"
 kotlinDatetime = "0.6.1"
@@ -82,6 +83,9 @@ koin-androidx-compose-navigation = { group = "io.insert-koin", name = "koin-andr
 #region Hilt
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-androidx-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltAndroicX" }
+hilt-androidx-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltAndroicX" }
+hilt-androidx-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltAndroicX" }
 #endregion
 
 #region Kotlin
@@ -148,6 +152,12 @@ koin = [
     "koin-androidx-compose-navigation",
 ]
 
+hilt = [
+    "hilt",
+    "hilt-androidx-work",
+    "hilt-androidx-navigation-compose",
+]
+
 room = [
     "room-ktx",
     "room-paging",
@@ -155,7 +165,6 @@ room = [
 ]
 
 compose = [
-    "navigation-compose",
     "compose-ui",
     "compose-paging",
     "compose-material3",
@@ -167,25 +176,9 @@ compose = [
     "compose-material-icons-extended",
 ]
 
-lifecycle-runtime = [
-    "lifecycle-runtime-ktx",
-    "lifecycle-runtime-compose",
-]
-
-lifecycle-viewmodel = [
-    "lifecycle-viewmodel-ktx",
-    "lifecycle-viewmodel-compose",
-    "lifecycle-viewmodel-savedstate",
-]
-
 datastore-preferences = [
     "datastore-preferences-core",
     "datastore-preferences-android",
-]
-
-kotlinx-coroutines = [
-    "kotlinx-coroutines-core",
-    "kotlinx-coroutines-android",
 ]
 
 retrofit2 = [
