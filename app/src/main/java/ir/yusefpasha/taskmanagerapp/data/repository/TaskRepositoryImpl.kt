@@ -35,10 +35,10 @@ class TaskRepositoryImpl(
         return try {
             val id = localDataSource.createTask(task = task.toTaskEntity())
             alarmService.schedule(
-                id = id,
-                title = task.title,
-                subtitle = task.description,
-                timestamp = task.deadline
+                id.toLong(),
+                task.title,
+                task.description,
+                task.deadline
             )
             true
         } catch (_: Exception) {
@@ -54,10 +54,10 @@ class TaskRepositoryImpl(
         val result = localDataSource.updateTask(task = task.toTaskEntity())
         if (result) {
             alarmService.schedule(
-                id = task.id,
-                title = task.title,
-                subtitle = task.description,
-                timestamp = task.deadline
+                task.id.toLong(),
+                task.title,
+                task.description,
+                task.deadline
             )
         }
         return result
@@ -66,7 +66,7 @@ class TaskRepositoryImpl(
     override suspend fun deleteTask(id: DatabaseId): Boolean {
         val result = localDataSource.deleteTask(id = id)
         if (result) {
-            alarmService.cancel(id = id)
+            alarmService.cancel(id.toLong())
         }
         return result
     }

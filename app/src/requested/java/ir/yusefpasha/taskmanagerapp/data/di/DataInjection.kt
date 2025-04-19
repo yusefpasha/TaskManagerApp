@@ -118,8 +118,8 @@ abstract class DataModule {
             alarmManager: AlarmManager
         ): AlarmService {
             return AlarmService(
-                context = context,
-                alarmManager = alarmManager
+                context,
+                alarmManager
             )
         }
 

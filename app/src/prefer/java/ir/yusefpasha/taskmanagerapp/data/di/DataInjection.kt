@@ -51,7 +51,14 @@ val TaskDataInjection = module {
     }
     singleOf(::ApiService)
     singleOf(::AppDataStore)
-    singleOf(::AlarmService)
+    single {
+        val context = androidContext()
+        val alarmManager = get<AlarmManager>()
+        AlarmService(
+            context,
+            alarmManager
+        )
+    }
     singleOf(::LocalDataSource)
     singleOf(::RemoteDataSource)
     singleOf(::TaskRepositoryImpl) { bind<TaskRepository>() }
