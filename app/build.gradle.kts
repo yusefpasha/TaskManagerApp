@@ -1,56 +1,132 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.androidx.room)
+    alias(libs.plugins.androidx.hilt)
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 android {
+
+    val dimensionDeployment = "deployment"
+
     namespace = "ir.yusefpasha.taskmanagerapp"
-    compileSdk = 35
+    compileSdk = 36
+    flavorDimensions += dimensionDeployment
 
     defaultConfig {
         applicationId = "ir.yusefpasha.taskmanagerapp"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/4ec15201-b157-49bd-8bef-a34f55cc8de4/\"")
+
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+
+    productFlavors {
+        create("prefer") {
+            dimension = dimensionDeployment
+            versionNameSuffix = ".prefer"
+        }
+        create("requested") {
+            isDefault = true
+            dimension = dimensionDeployment
+            versionNameSuffix = ".requested"
+        }
+    }
+
+    room {
+        generateKotlin = true
+        schemaDirectory("$projectDir/schemas")
+    }
+
+    applicationVariants.all {
+        outputs.all {
+            if (this is BaseVariantOutputImpl) {
+                outputFileName = "Task Manager App-${versionName}.apk"
+            }
+        }
+    }
+
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.bundles.android)
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.bundles.koin)
+
+    implementation(libs.bundles.datastore.preferences)
+
+    implementation(libs.work.runtime.ktx)
+
+    requestedImplementation(libs.bundles.hilt)
+    requestedKsp(libs.hilt.compiler)
+    requestedKsp(libs.hilt.androidx.compiler)
+
+
+    requestedImplementation(libs.bundles.retrofit2)
+    preferImplementation(libs.bundles.ktor.client)
+
+}
+
+fun DependencyHandlerScope.preferKsp(dependencyNotation: Any) {
+    add(
+        "kspPrefer",
+        dependencyNotation = dependencyNotation
+    )
+}
+fun DependencyHandlerScope.preferImplementation(dependencyNotation: Any) {
+    add(
+        "preferImplementation",
+        dependencyNotation = dependencyNotation
+    )
+}
+
+fun DependencyHandlerScope.requestedKsp(dependencyNotation: Any) {
+    add(
+        "kspRequested",
+        dependencyNotation = dependencyNotation
+    )
+}
+fun DependencyHandlerScope.requestedImplementation(dependencyNotation: Any) {
+    add(
+        "requestedImplementation",
+        dependencyNotation = dependencyNotation
+    )
 }

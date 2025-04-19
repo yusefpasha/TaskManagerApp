@@ -1,3 +1,44 @@
 <resources>
+
     <string name="app_name">Task Manager App</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="apply">Apply</string>
+    <string name="create">Create</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="loading">Loading…</string>
+
+    <string name="create_task_success">Task Created Successfully</string>
+    <string name="update_task_success">Task Updated Successfully</string>
+    <string name="delete_task_success">Task Deleted Successfully</string>
+
+    <string name="task_deadline_value">Deadline: %1$s</string>
+    <string name="task_not_exist_message">There are no tasks, please create a new task or refresh the page…</string>
+
+    <string name="home">Home</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+
+    <string name="task_title">Task Title</string>
+    <string name="task_description">Task Description</string>
+    <string name="task_deadline">Task Deadline</string>
+
+    <string name="theme">Theme</string>
+    <string name="theme_dark">Dark Mode</string>
+    <string name="theme_light">Light Mode</string>
+    <string name="theme_follow_system">Follow System</string>
+    <string name="sync_task_automatic">Sync Tasks Automatic</string>
+
+    <string name="sync_task_enable">Sync Task Enable</string>
+    <string name="sync_task_disable">Sync Task Disable</string>
+    <string name="sync_task_in_progress">Sync Task in Progress…</string>
+
+    <string name="permission_required">Permission Required!</string>
+    <string name="permission_rationale_value">Permission %1$s is so important for this Application.</string>
+    <string name="permissions_request_value">Permissions: %1$s ,Needed for this Application.</string>
+    <string name="permissions_rationale_value">Permissions: %1$s ,is so important for this Application.</string>
+    <string name="permission_notification_request_text">This Application requires access to Notifications to function properly, Grant this access to the Application</string>
+
+
 </resources>
