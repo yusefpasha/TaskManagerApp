@@ -21,4 +21,10 @@ object Constants {
     const val NOTIFICATION_CHANNEL_DESCRIPTION =
         "Displaying notifications related to tasks, displays information about each task at the specified time"
 
+    const val NETWORK_CLIENT_ERROR_MESSAGE = "Network Client Error!"
+    const val NETWORK_SERVER_ERROR_MESSAGE = "Network Server Error!"
+    const val NETWORK_TIMEOUT_ERROR_MESSAGE = "Network Timeout Error!"
+    const val NETWORK_INTERNET_CONNECTION_ERROR_MESSAGE = "Network Internet Connection Error!"
+    const val NETWORK_UNKNOWN_MESSAGE = "Unknown Error!"
+
 }
