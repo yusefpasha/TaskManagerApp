@@ -99,9 +99,10 @@ dependencies {
     requestedKsp(libs.hilt.compiler)
     requestedKsp(libs.hilt.androidx.compiler)
 
-
     requestedImplementation(libs.bundles.retrofit2)
     preferImplementation(libs.bundles.ktor.client)
+
+    requestedImplementation(libs.bundles.xml)
 
 }
 

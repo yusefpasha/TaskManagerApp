@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -22,10 +21,11 @@
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="0"
-        android:progressTint="#6161F2"
+        android:progressTint="?colorPrimary"
         tools:progress="40" />
 
     <TextView
+        style="@style/MyTextBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_item_task"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/prjMarginHalf"
+    android:background="@drawable/shape_background"
+    android:elevation="@dimen/prjElevation"
+    android:padding="@dimen/prjPadding"
+    tools:layout_margin="@dimen/prjMargin">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_task"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/MyImageShapeCircle"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/MyTextHead"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/prjMarginHalf"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textAlignment="textStart"
+        android:textColor="?colorOnBackground"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_task"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem/random" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        style="@style/MyTextBody"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:minLines="2"
+        android:textColor="?colorOnBackground"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        tools:text="@tools:sample/lorem/random" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dv_deadline_divider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/prjStroke"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/tv_description"
+        app:layout_constraintStart_toStartOf="@id/tv_description"
+        app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+    <TextView
+        android:id="@+id/tv_deadline"
+        style="@style/MyTextSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:minLines="1"
+        android:textColor="?colorOnBackground"
+        app:layout_constraintEnd_toStartOf="@+id/iv_deadline_status"
+        app:layout_constraintStart_toStartOf="@+id/dv_deadline_divider"
+        app:layout_constraintTop_toBottomOf="@+id/dv_deadline_divider"
+        tools:text="@tools:sample/lorem/random" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_deadline_status"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/tv_deadline"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@+id/dv_deadline_divider"
+        app:layout_constraintTop_toBottomOf="@+id/dv_deadline_divider"
+        android:src="@drawable/shape_circle"
+        tools:tint="?colorPrimary" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
