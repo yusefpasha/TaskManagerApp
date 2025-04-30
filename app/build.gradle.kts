@@ -31,7 +31,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/4ec15201-b157-49bd-8bef-a34f55cc8de4/\"")
+        buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/aa129adb-da91-4969-9137-b5249a0621e1/\"")
 
     }
 
