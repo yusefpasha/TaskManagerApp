@@ -1,6 +1,8 @@
 package ir.yusefpasha.taskmanagerapp.presentation.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -73,7 +75,10 @@ fun TaskNavigation(
             val state by viewModel.state.collectAsStateWithLifecycle()
 
             HomeScreen(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .statusBarsPadding()
+                    .navigationBarsPadding(),
                 state = state,
                 onEvent = viewModel::handleEvent
             )

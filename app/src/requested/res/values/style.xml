@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MyButton" parent="Widget.AppCompat.Button">
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingTop">@dimen/prjPaddingTopBottom</item>
+        <item name="android:paddingBottom">@dimen/prjPaddingTopBottom</item>
+        <item name="android:paddingStart">@dimen/prjPaddingStartEnd</item>
+        <item name="android:paddingEnd">@dimen/prjPaddingStartEnd</item>
+    </style>
+
+    <style name="MyTextHead" parent="Widget.AppCompat.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline5</item>
+        <item name="color">?colorOnBackground</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="MyTextBody" parent="Widget.AppCompat.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.MyTheme.Body1</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="color">?colorOnBackground</item>
+        <item name="android:gravity">top</item>
+    </style>
+
+    <style name="MyTextSubtitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.MyTheme.Subtitle2</item>
+        <item name="color">?colorOnBackground</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:gravity">top</item>
+    </style>
+
+    <style name="MyFloatingButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">?colorOnBackground</item>
+        <item name="tabBackground">?colorPrimary</item>
+    </style>
+
+    <style name="MyImageShapeCircle">
+        <item name="cornerSize">50%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+</resources>

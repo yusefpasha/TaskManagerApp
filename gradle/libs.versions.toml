@@ -3,6 +3,10 @@ agp = "8.9.1"
 koin = "4.0.0"
 room = "2.7.0"
 hilt = "2.56.2"
+material = "1.12.0"
+constraintlayout = "2.2.1"
+recyclerview = "1.4.0"
+swiperefreshlayout = "1.1.0"
 hiltAndroicX = "1.2.0"
 kotlin = "2.1.20"
 kotlinKsp = "2.1.20-1.0.32"
@@ -111,6 +115,13 @@ datastore-preferences-android = { group = "androidx.datastore", name = "datastor
 work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 #endregion
 
+#region XML
+android-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+#endregion
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -131,6 +142,13 @@ kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.
 
 
 [bundles]
+
+xml = [
+    "android-material",
+    "androidx-constraintlayout",
+    "androidx-recyclerview",
+    "androidx-swiperefreshlayout",
+]
 
 android = [
     "androidx-core-ktx",

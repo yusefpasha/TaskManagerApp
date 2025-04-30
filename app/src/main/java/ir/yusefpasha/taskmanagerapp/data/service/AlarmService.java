@@ -33,6 +33,11 @@ public class AlarmService {
 
     @SuppressLint("ScheduleExactAlarm")
     public void schedule(long id, String title, String subtitle, long timestamp) {
+
+        if (timestamp <= System.currentTimeMillis()) {
+            return;
+        }
+
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(Constants.ALARM_SERVICE_ID_KEY, id);
         intent.putExtra(Constants.ALARM_SERVICE_TITLE_KEY, title);

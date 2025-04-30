@@ -26,12 +26,12 @@ android {
         applicationId = "ir.yusefpasha.taskmanagerapp"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/4ec15201-b157-49bd-8bef-a34f55cc8de4/\"")
+        buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/aa129adb-da91-4969-9137-b5249a0621e1/\"")
 
     }
 
@@ -99,9 +99,10 @@ dependencies {
     requestedKsp(libs.hilt.compiler)
     requestedKsp(libs.hilt.androidx.compiler)
 
-
     requestedImplementation(libs.bundles.retrofit2)
     preferImplementation(libs.bundles.ktor.client)
+
+    requestedImplementation(libs.bundles.xml)
 
 }
 

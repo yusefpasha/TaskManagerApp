@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_theme"
+        android:title="@string/theme">
+        <menu>
+            <item
+                android:id="@+id/menu_theme_dark"
+                android:title="@string/theme_dark"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_theme_light"
+                android:title="@string/theme_light"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_theme_follow_system"
+                android:title="@string/theme_follow_system"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_sync_task"
+        android:checkable="true"
+        android:title="@string/sync_task_automatic"
+        app:showAsAction="never" />
+</menu>

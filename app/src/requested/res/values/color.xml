@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="edit">#1EB8FD</color>
+    <color name="delete">#F16459</color>
+    <color name="background">#FFFFFF</color>
+    <color name="on_background">#121212</color>
+</resources>

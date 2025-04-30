@@ -41,7 +41,7 @@ fun SplashScreen(
 
     AndroidView(
         factory = { context ->
-            LayoutInflater.from(context).inflate(R.layout.splash_layout, null, false)
+            LayoutInflater.from(context).inflate(R.layout.screen_splash, null, false)
         },
         update = { view ->
             val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)

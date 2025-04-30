@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="Theme.TaskManagerApp" parent="Theme.Material3.DayNight">
+        <item name="background">@color/background</item>
+        <item name="backgroundColor">@color/background</item>
+        <item name="colorOnBackground">@color/on_background</item>
+    </style>
+
+</resources>
