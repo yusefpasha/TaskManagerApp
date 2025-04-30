@@ -64,7 +64,7 @@ class HomeViewModel(
                 isLoading = false,
                 tasks = tasks
                     .map { task -> task.toTaskItem() }
-                    .sortedBy { it.deadline },
+                    .sortedByDescending { it.deadline },
                 theme = themeMode,
                 syncTask = syncTask
             )
